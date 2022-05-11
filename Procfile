@@ -1,1 +1,1 @@
-worker: python crypto_app.py
+worker: python crypto-app.py
