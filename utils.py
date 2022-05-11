@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 import json
 from datetime import datetime
 import vonage
-from requests.sessions import Session
 from pycoingecko import CoinGeckoAPI
 
 

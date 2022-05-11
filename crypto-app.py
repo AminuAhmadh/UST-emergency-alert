@@ -4,7 +4,7 @@ from time import time
 import vonage
 import os
 import time
-from utils import send_emails, send_telegram, get_ust_price
+from utils import send_telegram, get_ust_price
 
 KEY = os.getenv("KEY")
 SECRET = os.getenv("SECRET")
