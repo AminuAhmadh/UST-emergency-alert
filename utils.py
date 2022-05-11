@@ -4,7 +4,6 @@ import os
 from dotenv import load_dotenv
 import json
 from datetime import datetime
-from pretty_html_table import build_table
 import vonage
 from requests.sessions import Session
 from pycoingecko import CoinGeckoAPI
