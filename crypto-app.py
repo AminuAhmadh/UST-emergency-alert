@@ -41,8 +41,8 @@ url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=
 
 while True:
     print('Getting Price...')
-    price = json.loads(session.get(url).text)['data']['UST']['quote']['USD']['price']
-    # price = data['data']['UST']['quote']['USD']['price']
+    data = json.loads(session.get(url).text)
+    price = data.get('data')['UST']['quote']['USD']['price']
     print ('Price Obtained.')
 
     if price > 0.90:
