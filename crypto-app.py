@@ -3,14 +3,11 @@ from datetime import datetime
 from time import time
 import vonage
 import os
-import time
-from pycoingecko import CoinGeckoAPI
 from dotenv import load_dotenv
 import requests
 from requests.sessions import Session
 import json
 
-cg = CoinGeckoAPI()
 load_dotenv()
 
 KEY = os.getenv("KEY")
@@ -63,8 +60,6 @@ while True:
             print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
 
         print('EMERGENCY sell alert sent')
-
-        quit()
 
     else:
         send_telegram(f'Terra USD (UST) price now at {ust_price}. Price below sell target. HODL!')
