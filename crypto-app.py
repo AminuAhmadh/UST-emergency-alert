@@ -7,6 +7,7 @@ import time
 from pycoingecko import CoinGeckoAPI
 from dotenv import load_dotenv
 import requests
+from requests.sessions import Session
 import json
 
 cg = CoinGeckoAPI()
@@ -30,16 +31,31 @@ def send_telegram(message):
 
 
 def get_ust_price():
-    price = cg.get_price(ids='terrausd', vs_currencies='usd')
-    return (price['terrausd']['usd'])
+    data = json.loads(session.get(url).text)
+    price = data['data']['UST']['quote']['USD']['price']
+    return price
+
+
+headers = {
+  'Accepts': 'application/json',
+  'X-CMC_PRO_API_KEY': API_KEY,
+}
+
+session = Session()
+session.headers.update(headers)
+
+url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=ust&aux=cmc_rank'
+data = json.loads(session.get(url).text)
+
+data['data']['UST']['quote']['USD']['price']
 
 while True:
     print('Getting Price...')
-    price = get_ust_price ()
+    ust_price = get_ust_price ()
     print ('Price Obtained.')
 
-    if price > 0.90:
-        send_telegram(f'Terra USD (UST) Price now at {price}. SELL IMMEDIATELY !!!')
+    if ust_price > 0.90:
+        send_telegram(f'Terra USD (UST) Price now at {ust_price}. SELL IMMEDIATELY !!!')
         responseData = sms.send_message({
         "from": "EMERGENCY ALERT",
         "to": SMS_TO,
@@ -54,9 +70,9 @@ while True:
         quit()
 
     else:
-        send_telegram(f'Terra USD (UST) price now at {price}. Price below sell target. HODL!')
+        send_telegram(f'Terra USD (UST) price now at {ust_price}. Price below sell target. HODL!')
         print('EMERGENCY HODL sent.')
     
     print('Done for the Hour', str(current_time.hour))
 
-    time.sleep(5400)
+    time.sleep(5200)
