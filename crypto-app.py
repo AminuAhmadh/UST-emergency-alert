@@ -4,18 +4,34 @@ from time import time
 import vonage
 import os
 import time
-from utils import send_telegram, get_ust_price
+from pycoingecko import CoinGeckoAPI
+from dotenv import load_dotenv
+import requests
+import json
+
+cg = CoinGeckoAPI()
+load_dotenv()
 
 KEY = os.getenv("KEY")
 SECRET = os.getenv("SECRET")
-API_KEY = os.getenv('COIN_API_KEY')
+MY_TOKEN = os.getenv("MY_TOKEN")
 SMS_TO = os.getenv("TO_SMS")
+API_KEY = os.getenv('COIN_API_KEY')
 
 # setting up client for VONAGE TEXT messages
 client = vonage.Client(key=KEY, secret=SECRET)
 sms = vonage.Sms(client)
 
 current_time = datetime.now()
+
+def send_telegram(message):
+    requests.post(
+        'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}&parse_mode=markdown'.format(MY_TOKEN, 786259592, message))
+
+
+def get_ust_price():
+    price = cg.get_price(ids='terrausd', vs_currencies='usd')
+    return (price['terrausd']['usd'])
 
 while True:
     print('Getting Price...')
