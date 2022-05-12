@@ -28,11 +28,6 @@ def send_telegram(message):
         'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}&parse_mode=markdown'.format(MY_TOKEN, 786259592, message))
 
 
-def get_ust_price():
-    data = json.loads(session.get(url).text)
-    price = data['data']['UST']['quote']['USD']['price']
-    return price
-
 
 headers = {
   'Accepts': 'application/json',
@@ -46,11 +41,12 @@ url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=
 
 while True:
     print('Getting Price...')
-    ust_price = get_ust_price ()
+    data = json.loads(session.get(url).text)
+    price = data['data']['UST']['quote']['USD']['price']
     print ('Price Obtained.')
 
-    if ust_price > 0.90:
-        send_telegram(f'Terra USD (UST) Price now at {ust_price}. SELL IMMEDIATELY !!!')
+    if price > 0.90:
+        send_telegram(f'Terra USD (UST) Price now at {price}. SELL IMMEDIATELY !!!')
         responseData = sms.send_message({
         "from": "EMERGENCY ALERT",
         "to": SMS_TO,
@@ -63,7 +59,7 @@ while True:
         print('EMERGENCY sell alert sent')
 
     else:
-        send_telegram(f'Terra USD (UST) price now at {ust_price}. Price below sell target. HODL!')
+        send_telegram(f'Terra USD (UST) price now at {price}. Price below sell target. HODL!')
         print('EMERGENCY HODL sent.')
     
     print('Done for the Hour', str(current_time.hour))
