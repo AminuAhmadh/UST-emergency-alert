@@ -45,9 +45,6 @@ session = Session()
 session.headers.update(headers)
 
 url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=ust&aux=cmc_rank'
-data = json.loads(session.get(url).text)
-
-data['data']['UST']['quote']['USD']['price']
 
 while True:
     print('Getting Price...')
