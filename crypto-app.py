@@ -37,12 +37,12 @@ headers = {
 session = Session()
 session.headers.update(headers)
 
-url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=ust&aux=cmc_rank'
+url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=ust&aux=cmc_rank'
 
 while True:
     print('Getting Price...')
     data = json.loads(session.get(url).text)
-    price = data.get('data')['UST']['quote']['USD']['price']
+    price = data['data']['UST'][1]['quote']['USD']['price']
     print ('Price Obtained.')
 
     if price > 0.90:
