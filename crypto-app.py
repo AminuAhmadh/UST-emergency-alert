@@ -52,7 +52,7 @@ while True:
         print('EMERGENCY sell alert sent')
 
     else:
-        send_telegram(f'Terra USD (UST) price now at ${price}. Price below sell target. HODL!')
+        send_telegram('Terra USD (UST) price now at $. Price below sell target. HODL!')
         print('EMERGENCY HODL sent.')
     
     print('Done for the Hour', str(current_time.hour))
