@@ -22,10 +22,9 @@ client = vonage.Client(key=KEY, secret=SECRET)
 sms = vonage.Sms(client)
 
 current_time = datetime.now()
-
 # func to send telegram message
 def send_telegram(message):
-    requests.post(
+    requests.get(
         'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}&parse_mode=markdown'.format(MY_TOKEN, 786259592, message))
 
 # url to scrape price of UST
