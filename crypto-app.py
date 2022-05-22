@@ -37,28 +37,22 @@ while True:
     price_value = soup.find('div', {'class': 'priceValue'})
     price = float(price_value.text.strip('$'))
     print ('Price Obtained.')
-
+    send_telegram(f'Terra USD (UST) Price now at ${price}.')
     if price > 0.90:
-        sell = True
-        if sell:
-            send_telegram(f'Terra USD (UST) Price now at ${price}. SELL IMMEDIATELY !!!')
-            responseData = sms.send_message({
-            "from": "EMERGENCY ALERT",
-            "to": SMS_TO,
-            "text": "Sell UST NOW!",})
-            if responseData["messages"][0]["status"] == "0":
-                print("SMS sent successfully.")
-            else:
-                print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
-
-            print('EMERGENCY sell alert sent')
+        send_telegram('SELL IMMEDIATELY !!!')
+        responseData = sms.send_message({
+        "from": "EMERGENCY ALERT",
+        "to": SMS_TO,
+        "text": "Sell UST NOW!",})
+        if responseData["messages"][0]["status"] == "0":
+            print("SMS sent successfully.")
+        else:
+            print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
+        print('EMERGENCY sell alert sent')
 
     elif price < 0.90:
-        hodl = True
-        if hodl:
-            send_telegram(f'Terra USD (UST) price now at ${price}. Price below sell target. HODL!')
-            print('EMERGENCY HODL sent.')
-        
+        send_telegram('Price below sell target. HODL!')
+        print('EMERGENCY HODL sent.')
         print('Done for the Hour', str(current_time.hour))
         # wait 1 HOUR
         time.sleep(5200)
