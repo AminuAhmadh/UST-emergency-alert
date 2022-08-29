@@ -35,32 +35,32 @@ while True:
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     price_value = soup.find('div', {'class': 'priceValue'})
-    price = float(price_value.text.strip('$'))
+    price = price_value.text.strip('$')
     print ('Price Obtained.')
     send_telegram(f'Ethereum (ETH) Price now at ${price}.')
-    if price > 2500:
-        send_telegram('SELL IMMEDIATELY. Short from here. !!!')
-        responseData = sms.send_message({
-        "from": "EMERGENCY ALERT",
-        "to": SMS_TO,
-        "text": "Sell UST NOW!",})
-        if responseData["messages"][0]["status"] == "0":
-            print("SMS sent successfully.")
-        else:
-            print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
-        print('EMERGENCY sell alert sent')
+    # if price > 2500:
+    #     send_telegram('SELL IMMEDIATELY. Short from here. !!!')
+    #     responseData = sms.send_message({
+    #     "from": "EMERGENCY ALERT",
+    #     "to": SMS_TO,
+    #     "text": "Sell UST NOW!",})
+    #     if responseData["messages"][0]["status"] == "0":
+    #         print("SMS sent successfully.")
+    #     else:
+    #         print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
+    #     print('EMERGENCY sell alert sent')
 
-    elif price <= 1000:
-        send_telegram('LONG target hit! LONG FROM HERE')
-        responseData = sms.send_message({
-        "from": "EMERGENCY ALERT",
-        "to": SMS_TO,
-        "text": "LONG ETH NOW!",})
-        if responseData["messages"][0]["status"] == "0":
-            print("SMS sent successfully.")
-        else:
-            print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
-        print('LONG sent.')
+    # elif price <= 1000:
+    #     send_telegram('LONG target hit! LONG FROM HERE')
+    #     responseData = sms.send_message({
+    #     "from": "EMERGENCY ALERT",
+    #     "to": SMS_TO,
+    #     "text": "LONG ETH NOW!",})
+    #     if responseData["messages"][0]["status"] == "0":
+    #         print("SMS sent successfully.")
+    #     else:
+    #         print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
+    #     print('LONG sent.')
     print('Done for the Hour', str(current_time.hour))
     # wait 1 HOUR
     time.sleep(5200)
