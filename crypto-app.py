@@ -63,4 +63,4 @@ while True:
         print('LONG sent.')
     print('Done for the Hour', str(current_time.hour))
     # wait 1 HOUR
-    time.(sleep(5200)
+    time.sleep(5200)
